@@ -14,8 +14,8 @@ contract ItemNFT is ERC721Upgradeable {
    using Counters for Counters.Counter;
    using Strings for uint256;
    Counters.Counter private _tokenIds;
-   mapping(address=>EnumerableSet.UintSet) playerItemsMapping;
-   mapping(uint256=>uint64) itemTypeIdMapping;
+   mapping(address=>EnumerableSet.UintSet) private ownerItemsMapping;
+   mapping(uint256=>uint64) private itemTypeIdMapping;
 
     function name() public view virtual override returns (string memory) {
         return "TradeIcons";
@@ -36,8 +36,8 @@ contract ItemNFT is ERC721Upgradeable {
 
     function ownerTokens(address owner) public view returns (string memory) {
        string memory toReturn="";
-       for (uint256 index = 0; index < playerItemsMapping[owner].length(); index++) {
-          toReturn=string(abi.encodePacked(toReturn, ";", Strings.toString(playerItemsMapping[owner].at(index))));
+       for (uint256 index = 0; index < ownerItemsMapping[owner].length(); index++) {
+          toReturn=string(abi.encodePacked(toReturn, ";", Strings.toString(ownerItemsMapping[owner].at(index))));
        }
        return toReturn;
     }
