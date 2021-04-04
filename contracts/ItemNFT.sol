@@ -17,6 +17,14 @@ contract ItemNFT is ERC721Upgradeable {
    mapping(address=>EnumerableSet.UintSet) playerItemsMapping;
    mapping(uint256=>uint64) itemTypeIdMapping;
 
+    function name() public view virtual override returns (string memory) {
+        return "TradeIcons";
+    }
+
+    function symbol() public view virtual override returns (string memory) {
+        return "ICON";
+    }
+
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
 
