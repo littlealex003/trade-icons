@@ -52,6 +52,16 @@ describe("ItemNFT", function () {
   it('returns correct balanceOf for account 2', async function () {
     expect((await this.itemNFT.balanceOf(receiver)).toNumber()).to.equal(4);
   });
+  it('returns correct ownerOf for NFT 5', async function () {
+    expect(await this.itemNFT.ownerOf(5)).to.equal(sender);
+  });
+  it('transfers nft correctly from account 1 to account 2', async function () {
+    await this.itemNFT.transferFrom(sender, receiver, 5, {from: sender});
+    expect((await this.itemNFT.balanceOf(sender)).toNumber()).to.equal(5);
+    expect((await this.itemNFT.balanceOf(receiver)).toNumber()).to.equal(5);
+    expect(await this.itemNFT.ownerTokens(sender)).to.equal('1;2;4;10;9;');
+    expect(await this.itemNFT.ownerTokens(receiver)).to.equal('3;6;7;8;5;');
+  });
 //   it('mint negative type fails', async function () {
 //     // Conditions that trigger a require statement can be precisely tested
 //     await expectException(
